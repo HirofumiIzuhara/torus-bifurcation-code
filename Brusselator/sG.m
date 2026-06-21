@@ -1,0 +1,10 @@
+function r=sG(p,u) % compute pde-part of residual
+f=nodalf(p,u); 
+par=u(p.nu+1:end);
+alpha=par(1); 
+L=par(2); 
+Du=par(3); 
+Dv=par(4);
+N=sparse(p.pdeo.grid.nPoints, p.pdeo.grid.nPoints); 
+K=[[(Du/L/L)*p.mat.K N];[N (alpha*Dv/L/L)*p.mat.K]];
+r=K*u(1:p.nu)-p.mat.M*f; 
